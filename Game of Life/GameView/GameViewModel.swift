@@ -14,19 +14,17 @@ class GameViewModel: ObservableObject {
     @Published var gridCellColor: Color = .black
     @Published var showGuide = false
     @Published var isAutomating = false
-    @Published var columns = [GridItem(.flexible(), spacing: 1),
-                              GridItem(.flexible(), spacing: 1),
-                              GridItem(.flexible(), spacing: 1),
-                              GridItem(.flexible(), spacing: 1),
-                              GridItem(.flexible(), spacing: 1),
-                              GridItem(.flexible(), spacing: 1),
-                              GridItem(.flexible(), spacing: 1),
-                              GridItem(.flexible(), spacing: 1),
-                              GridItem(.flexible(), spacing: 1),
-                              GridItem(.flexible(), spacing: 1)]
+    @Published var columns: [GridItem] = []
     
     init(){
         showGuide.toggle()
+        populateColumns()
+    }
+    
+    func populateColumns() {
+        for _ in (0..<10) {
+            columns.append(GridItem(.flexible(), spacing: 1))
+        }
     }
     
     func resetGame() {
