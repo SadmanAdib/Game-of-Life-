@@ -16,34 +16,25 @@ struct GameView: View {
             LinearGradient(colors: [Color.gray, Color(.lightGray)], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
             VStack {
-                Spacer()
-                Spacer()
-                HStack {
-                    Spacer()
-                    LazyVGrid(columns: vm.columns,
-                              spacing: 2) {
-                        ForEach(0..<10) { i in
-                            ForEach(0..<10) { j in
-                                Rectangle()
-                                    .frame(width: 30, height: UIScreen.main.bounds.height / 30)
-                                    .onTapGesture {
-                                        vm.switchNumber.toggle()
-                                        if vm.switchNumber {
-                                            vm.grid[i][j] = 1
-                                        }
-                                        else {
-                                            vm.grid[i][j] = 0
-                                        }
+                LazyVGrid(columns: vm.columns,
+                          spacing: 2) {
+                    ForEach(0..<10) { i in
+                        ForEach(0..<10) { j in
+                            Rectangle()                                  .aspectRatio(contentMode: .fit)
+                                .onTapGesture {
+                                    vm.switchNumber.toggle()
+                                    if vm.switchNumber {
+                                        vm.grid[i][j] = 1
                                     }
-                                    .foregroundColor(vm.grid[i][j] == 1 ? .white : .black)
-                            }
+                                    else {
+                                        vm.grid[i][j] = 0
+                                    }
+                                }
+                                .foregroundColor(vm.grid[i][j] == 1 ? .white : .black)
                         }
                     }
-                    Spacer()
                 }
-                
-                Spacer()
-                
+                          .aspectRatio(1.2, contentMode: .fit)
                 ScrollView(.horizontal){
                     HStack {
                         Button {
