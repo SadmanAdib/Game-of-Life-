@@ -12,7 +12,6 @@ class GameViewModel: ObservableObject {
     @Published var grid: [[Int]] = Array(repeating: Array(repeating: 0, count: 10), count: 10)
     @Published var updatedGrid: [[Int]] = Array(repeating: Array(repeating: 0, count: 10), count: 10)
     @Published var gridCellColor: Color = .black
-    @Published var switchNumber = false
     @Published var showGuide = false
     @Published var isAutomating = false
     @Published var columns = [GridItem(.flexible(), spacing: 1),

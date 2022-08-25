@@ -22,12 +22,11 @@ struct GameView: View {
                         ForEach(0..<10) { j in
                             Rectangle()                                  .aspectRatio(contentMode: .fit)
                                 .onTapGesture {
-                                    vm.switchNumber.toggle()
-                                    if vm.switchNumber {
-                                        vm.grid[i][j] = 1
+                                    if vm.grid[i][j] == 1 {
+                                        vm.grid[i][j] = 0
                                     }
                                     else {
-                                        vm.grid[i][j] = 0
+                                        vm.grid[i][j] = 1
                                     }
                                 }
                                 .foregroundColor(vm.grid[i][j] == 1 ? .white : .black)
