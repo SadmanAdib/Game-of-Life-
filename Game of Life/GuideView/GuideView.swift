@@ -19,24 +19,9 @@ struct GuideView: View {
                 
                 VStack(spacing: 20){
                     
-                    HStack(spacing: 20){
-                        Rectangle()
-                            .frame(width: 80, height: 80)
-                            .foregroundColor(.white)
-                        
-                        Text("ALIVE")
-                            .font(.title)
-                    }
+                    MarkerView(title: "ALIVE", cellColor: .white)
                     
-                    HStack(spacing: 20){
-                        Rectangle()
-                            .frame(width: 80, height: 80)
-                            .foregroundColor(.black)
-                        
-                        Text("DEAD")
-                            .font(.title)
-                        
-                    }
+                    MarkerView(title: "DEAD", cellColor: .black)
                     
                     Spacer()
                     
@@ -50,19 +35,13 @@ struct GuideView: View {
                     Button {
                         showGuide.toggle()
                     } label: {
-                        Text("Continue to Game")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .frame(width: 180, height: 40)
-                            .foregroundColor(.white)
-                            .background(Color.green)
-                            .cornerRadius(10)
+                        ButtonLabelView(title: "Play Game", color: Color.green)
                     }
                     
                 }
                 .padding()
             }
-            .navigationTitle("Guidelines")
+            .navigationTitle("Game Guidelines")
         }
     }
 }
@@ -70,5 +49,22 @@ struct GuideView: View {
 struct GuideView_Previews: PreviewProvider {
     static var previews: some View {
         GuideView(showGuide: .constant(true))
+    }
+}
+
+struct MarkerView: View {
+    
+    var title: String
+    var cellColor: Color
+    
+    var body: some View {
+        HStack(spacing: 20){
+            Rectangle()
+                .frame(width: 80, height: 80)
+                .foregroundColor(cellColor)
+            
+            Text(title)
+                .font(.title)
+        }
     }
 }

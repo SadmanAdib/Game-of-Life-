@@ -16,47 +16,8 @@ struct GameView: View {
             LinearGradient(colors: [Color.gray, Color(.lightGray)], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
             VStack {
-                LazyVGrid(columns: vm.columns,
-                          spacing: 2) {
-                    ForEach(0..<10) { i in
-                        ForEach(0..<10) { j in
-                            Rectangle()                                  .aspectRatio(contentMode: .fit)
-                                .onTapGesture {
-                                    if vm.grid[i][j] == 1 {
-                                        vm.grid[i][j] = 0
-                                    }
-                                    else {
-                                        vm.grid[i][j] = 1
-                                    }
-                                }
-                                .foregroundColor(vm.grid[i][j] == 1 ? .white : .black)
-                        }
-                    }
-                }
-                          .aspectRatio(1.2, contentMode: .fit)
-                ScrollView(.horizontal){
-                    HStack {
-                        Button {
-                            vm.computeLogic()
-                        } label: {
-                            ButtonLabelView(title: "Next Generation", color: Color.red)}
-                        
-                        Button {
-                            vm.automatePattern()
-                        } label: {
-                            ButtonLabelView(title: vm.isAutomating ? "Stop Automating" : "Automate", color: Color.purple)}
-                        
-                        Button {
-                            vm.populatingGridRandomly()
-                        } label: {
-                            ButtonLabelView(title: "Random Start", color: Color.green)}
-                        
-                        Button {
-                            vm.resetGame()
-                        } label: {
-                            ButtonLabelView(title: "Reset", color: Color.blue)}
-                    }
-                }
+                GridView(vm: vm)
+                FunctionButtonsView(vm: vm)
             }
             .padding()
         }
@@ -85,5 +46,62 @@ struct ButtonLabelView: View {
             .foregroundColor(.white)
             .background(color)
             .cornerRadius(10)
+    }
+}
+
+struct GridView: View {
+    
+    @ObservedObject var vm: GameViewModel
+    
+    var body: some View {
+        LazyVGrid(columns: vm.columns,
+                  spacing: 2) {
+            ForEach(0..<10) { i in
+                ForEach(0..<10) { j in
+                    Rectangle()                                  .aspectRatio(contentMode: .fit)
+                        .onTapGesture {
+                            if vm.grid[i][j] == 1 {
+                                vm.grid[i][j] = 0
+                            }
+                            else {
+                                vm.grid[i][j] = 1
+                            }
+                        }
+                        .foregroundColor(vm.grid[i][j] == 1 ? .white : .black)
+                }
+            }
+        }
+                  .aspectRatio(1.2, contentMode: .fit)
+    }
+}
+
+struct FunctionButtonsView: View {
+    
+    @ObservedObject var vm: GameViewModel
+    
+    var body: some View {
+        ScrollView(.horizontal){
+            HStack {
+                Button {
+                    vm.computeLogic()
+                } label: {
+                    ButtonLabelView(title: "Next Generation", color: Color.red)}
+                
+                Button {
+                    vm.automatePattern()
+                } label: {
+                    ButtonLabelView(title: vm.isAutomating ? "Stop Automating" : "Automate", color: Color.purple)}
+                
+                Button {
+                    vm.populatingGridRandomly()
+                } label: {
+                    ButtonLabelView(title: "Random Start", color: Color.green)}
+                
+                Button {
+                    vm.resetGame()
+                } label: {
+                    ButtonLabelView(title: "Reset", color: Color.blue)}
+            }
+        }
     }
 }
