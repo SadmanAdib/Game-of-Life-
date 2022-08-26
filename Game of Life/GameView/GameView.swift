@@ -16,8 +16,10 @@ struct GameView: View {
             LinearGradient(colors: [Color.gray, Color(.lightGray)], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
             VStack {
+                Spacer()
                 GridView(vm: vm)
                 FunctionButtonsView(vm: vm)
+                Spacer()
             }
             .padding()
         }
@@ -80,7 +82,7 @@ struct FunctionButtonsView: View {
     @ObservedObject var vm: GameViewModel
     
     var body: some View {
-        ScrollView(.horizontal){
+        VStack {
             HStack {
                 Button {
                     vm.computeLogic()
@@ -91,10 +93,11 @@ struct FunctionButtonsView: View {
                     vm.automatePattern()
                 } label: {
                     ButtonLabelView(title: vm.isAutomating ? "Stop Automating" : "Automate", color: Color.purple)}
-                
+            }
+            HStack {
                 Button {
-                    vm.populatingGridRandomly()
-                } label: {
+                        vm.populatingGridRandomly()
+                    } label: {
                     ButtonLabelView(title: "Random Start", color: Color.green)}
                 
                 Button {
