@@ -18,6 +18,7 @@ struct GameView: View {
             VStack {
                 Spacer()
                 GridView(vm: vm)
+                Spacer()
                 FunctionButtonsView(vm: vm)
                 Spacer()
             }
@@ -57,10 +58,11 @@ struct GridView: View {
     
     var body: some View {
         LazyVGrid(columns: vm.columns,
-                  spacing: 2) {
-            ForEach(0..<10) { i in
-                ForEach(0..<10) { j in
-                    Rectangle()                                  .aspectRatio(contentMode: .fit)
+                  spacing: 1) {
+            ForEach(0..<30) { i in
+                ForEach(0..<30) { j in
+                    Rectangle()
+                        .aspectRatio(contentMode: .fit)
                         .onTapGesture {
                             if vm.grid[i][j] == 1 {
                                 vm.grid[i][j] = 0
@@ -73,7 +75,7 @@ struct GridView: View {
                 }
             }
         }
-                  .aspectRatio(1.2, contentMode: .fit)
+                  .aspectRatio(1, contentMode: .fit)
     }
 }
 
@@ -96,8 +98,8 @@ struct FunctionButtonsView: View {
             }
             HStack {
                 Button {
-                        vm.populatingGridRandomly()
-                    } label: {
+                    vm.populatingGridRandomly()
+                } label: {
                     ButtonLabelView(title: "Random Start", color: Color.green)}
                 
                 Button {
