@@ -18,9 +18,19 @@ struct GameView: View {
             VStack {
                 Spacer()
                 GridView(vm: vm)
+                Section {
+                    Picker("Dimension", selection: $vm.dimension) {
+                        ForEach(vm.dimensions, id: \.self) {
+                            Text("\($0)")
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                } header: {
+                    Text("Select a dimension")
+                }
                 Spacer()
                 FunctionButtonsView(vm: vm)
-                Spacer()
+                    .padding(.bottom, 10)
             }
             .padding()
         }
@@ -53,15 +63,14 @@ struct ButtonLabelView: View {
 }
 
 struct GridView: View {
-    
     @ObservedObject var vm: GameViewModel
-    
     var body: some View {
         LazyVGrid(columns: vm.columns,
                   spacing: 1) {
-            ForEach(0..<30) { i in
-                ForEach(0..<30) { j in
+            ForEach(vm.range, id: \.self) { i in
+                ForEach(vm.range, id: \.self) { j in
                     Rectangle()
+                        .id(vm.cellId[i][j])
                         .aspectRatio(contentMode: .fit)
                         .onTapGesture {
                             if vm.grid[i][j] == 1 {
@@ -75,7 +84,10 @@ struct GridView: View {
                 }
             }
         }
-                  .aspectRatio(1, contentMode: .fit)
+                  .aspectRatio(1, contentMode: .fill)
+                  .padding()
+        //For landscaping, the grid becomes smaller, uss the following modifiers instead of the ones in line 89 and 90:
+            //      .aspectRatio(1, contentMode: .fit)
     }
 }
 

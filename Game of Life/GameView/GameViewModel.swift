@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+//extension Range: Identifiable {
+//    public var id: Int {
+//        return Int(UUID().uuidString) ?? 0
+//    }
+//}
+
 class GameViewModel: ObservableObject {
     
     @Published var grid: [[Int]] = [[]]
@@ -15,26 +21,51 @@ class GameViewModel: ObservableObject {
     @Published var showGuide = false
     @Published var isAutomating = false
     @Published var columns: [GridItem] = []
+    @Published var dimension = 10 {
+        didSet {
+            populateColumns()
+            idGenerator()
+        }
+    }
+    var cellId: [[Int]] = [[]]
+    var range: Range<Int> {
+        return 0..<dimension
+    }
     
+    let dimensions = [10, 20, 30, 40, 50]
+
     init(){
-        generateEmptyGrid()
         showGuide.toggle()
         populateColumns()
+        idGenerator()
     }
-    
-    func generateEmptyGrid() {
-        grid = Array(repeating: Array(repeating: 0, count: 30), count: 30)
-        updatedGrid = Array(repeating: Array(repeating: 0, count: 30), count: 30)
-    }
-    
-    func populateColumns() {
-        for _ in (0..<30) {
-            columns.append(GridItem(.flexible(minimum: 1), spacing: 1))
+
+    func idGenerator() {
+        var value = 1
+        for i in 0..<dimension {
+            for j in 0..<dimension {
+                self.cellId[i][j] = value
+                value += 1
+            }
         }
     }
     
+    func generateEmptyGrid() {
+        grid = Array(repeating: Array(repeating: 0, count: dimension), count: dimension)
+        updatedGrid = Array(repeating: Array(repeating: 0, count: dimension), count: dimension)
+        cellId = Array(repeating: Array(repeating: 0, count: dimension), count: dimension)
+    }
+    
+    func populateColumns() {
+        columns.removeAll()
+        for _ in (0..<dimension) {
+            columns.append(GridItem(.flexible(minimum: 1), spacing: 1))
+        }
+        generateEmptyGrid()
+    }
+    
     func resetGame() {
-        grid = Array(repeating: Array(repeating: 0, count: 30), count: 30)
+        grid = Array(repeating: Array(repeating: 0, count: dimension), count: dimension)
     }
     
     func populatingGridRandomly() {
@@ -79,8 +110,8 @@ class GameViewModel: ObservableObject {
         for i in (-1...1) {
             for j in (-1...1) {
                 
-                let col = (x+i+30) % 30
-                let row = (y+j+30) % 30
+                let col = (x+i+dimension) % dimension
+                let row = (y+j+dimension) % dimension
                 
                 sum += grid[col][row]
             }
