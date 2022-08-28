@@ -88,6 +88,8 @@ struct GridView: View {
                   .padding()
         //For landscaping, the grid becomes smaller, uss the following modifiers instead of the ones in line 89 and 90:
             //      .aspectRatio(1, contentMode: .fit)
+        //Then go to info tab and open Supported inferface orientations. Then add the following items: item1: Portrait (top home button), item2: Landscape (left home button), item3: Landscape (right home button)
+        //Then go to BuildSettings and search orientation and add the following for all orientation possible: UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
     }
 }
 
