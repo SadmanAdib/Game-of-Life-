@@ -23,29 +23,30 @@ class GameViewModel: ObservableObject {
     @Published var columns: [GridItem] = []
     @Published var dimension = 10.0 {
         didSet {
+//            cellId.removeAll()
+//            grid.removeAll()
+//            updatedGrid.removeAll()
             populateColumns()
-            idGenerator()
         }
     }
-    var cellId: [[Int]] = [[]]
+    
+    var cellId: [[String]] = [[]]
     var range: Range<Int> {
         return 0..<Int(dimension)
     }
-    
-    let dimensions = [10, 20, 30, 40, 50]
+    //let dimensions = [10, 20, 30, 40, 50]
 
     init(){
         showGuide.toggle()
         populateColumns()
-        idGenerator()
     }
 
     func idGenerator() {
-        var value = 1
+        var id = UUID().uuidString
         for i in 0..<Int(dimension) {
             for j in 0..<Int(dimension) {
-                self.cellId[i][j] = value
-                value += 1
+                self.cellId[i][j] = id
+                id = UUID().uuidString
             }
         }
     }
@@ -53,7 +54,8 @@ class GameViewModel: ObservableObject {
     func generateEmptyGrid() {
         grid = Array(repeating: Array(repeating: 0, count: Int(dimension)), count: Int(dimension))
         updatedGrid = Array(repeating: Array(repeating: 0, count: Int(dimension)), count: Int(dimension))
-        cellId = Array(repeating: Array(repeating: 0, count: Int(dimension)), count: Int(dimension))
+        cellId = Array(repeating: Array(repeating: "0", count: Int(dimension)), count: Int(dimension))
+        idGenerator()
     }
     
     func populateColumns() {
