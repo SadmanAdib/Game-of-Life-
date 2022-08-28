@@ -18,16 +18,27 @@ struct GameView: View {
             VStack {
                 Spacer()
                 GridView(vm: vm)
-                Section {
-                    Picker("Dimension", selection: $vm.dimension) {
-                        ForEach(vm.dimensions, id: \.self) {
-                            Text("\($0)")
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                } header: {
-                    Text("Select a dimension")
+                Slider(value: $vm.dimension,
+                       in: 10...50,
+                       step: 1.0) {
+                    Text("Slider")
                 }
+                HStack {
+                    Text("Dimension:")
+                    Text(String(format: "%.0f", vm.dimension))
+                    Text("X")
+                    Text(String(format: "%.0f", vm.dimension))
+                }
+//                Section {
+//                    Picker("Dimension", selection: $vm.dimension) {
+//                        ForEach(vm.dimensions, id: \.self) {
+//                            Text("\($0)")
+//                        }
+//                    }
+//                    .pickerStyle(.segmented)
+//                } header: {
+//                    Text("Select a dimension")
+//                }
                 Spacer()
                 FunctionButtonsView(vm: vm)
                     .padding(.bottom, 10)
