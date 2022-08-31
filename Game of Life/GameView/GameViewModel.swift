@@ -50,6 +50,10 @@ class GameViewModel: ObservableObject {
             }
         }
     }
+// MARK: Can also use this function but performance drops.
+//    func idGenerator() -> String {
+//        UUID().uuidString
+//    }
     
     func generateEmptyGrid() {
         grid = Array(repeating: Array(repeating: 0, count: Int(dimension)), count: Int(dimension))

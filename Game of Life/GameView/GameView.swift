@@ -82,6 +82,7 @@ struct GridView: View {
                 ForEach(vm.range, id: \.self) { j in
                     Rectangle()
                         .id(vm.cellId[i][j])
+                        //.id(vm.idGenerator()) 
                         .aspectRatio(contentMode: .fit)
                         .onTapGesture {
                             if vm.grid[i][j] == 1 {
